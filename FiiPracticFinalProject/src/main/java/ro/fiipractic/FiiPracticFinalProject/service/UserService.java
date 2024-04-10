@@ -8,4 +8,8 @@ public interface UserService {
     public void registerUser(User user);
 
     public List<User> getAllUsers();
+
+    public User getUserByUsername(String username);
+
+    public void checkLogin(String username, String password);
 }
