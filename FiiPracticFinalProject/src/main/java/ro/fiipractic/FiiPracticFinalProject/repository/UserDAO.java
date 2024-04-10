@@ -37,4 +37,13 @@ public class UserDAO {
             throw new UserNotFoundException(String.format("User with username %s was not found", username));
         }
     }
+
+    public List<User> getUsersByFirstName(String firstName){
+        return jdbcTemplate.query("SELECT * FROM \"USERS\" WHERE \"FIRST_NAME\" = ? ", new UserRowMapper(), firstName);
+    }
+
+    public List<User> getUsersByLastName(String lastName){
+        return jdbcTemplate.query("SELECT * FROM \"USERS\" WHERE \"LAST_NAME\" = ? ", new UserRowMapper(), lastName);
+    }
+
 }

@@ -32,10 +32,26 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void registerUser(@RequestBody UserLoginRequest userLoginRequest) {
         userService.checkLogin(userLoginRequest.getUsername(), userLoginRequest.getPassword());
+    }
+
+    @GetMapping(value = "/user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUserByUsername(@PathVariable String username){
+        return userService.getUserByUsername(username);
+    }
+
+    @GetMapping(value = "/users/firstName/{firstName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> getUsersByFirstName(@PathVariable String firstName) {
+        return userService.getUsersByFirstName(firstName);
+    }
+
+    @GetMapping(value = "/users/lastName/{lastName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> getUsersByLastName(@PathVariable String lastName) {
+        return userService.getUsersByFirstName(lastName);
     }
 }

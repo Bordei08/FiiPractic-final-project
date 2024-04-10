@@ -40,4 +40,12 @@ public class UserServiceImpl implements  UserService{
 
     }
 
+    public List<User> getUsersByFirstName(String firstName){
+        return userRepository.getUsersByFirstName(firstName);
+    }
+
+    public  List<User> getUsersByLastName(String lastName) {
+        return userRepository.getUsersByLastName(lastName);
+    }
+
 }

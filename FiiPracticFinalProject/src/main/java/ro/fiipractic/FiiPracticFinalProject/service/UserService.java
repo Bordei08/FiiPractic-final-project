@@ -11,5 +11,9 @@ public interface UserService {
 
     public User getUserByUsername(String username);
 
+    public List<User> getUsersByFirstName(String firstName);
+
+    public List<User> getUsersByLastName(String lastName);
+
     public void checkLogin(String username, String password);
 }
