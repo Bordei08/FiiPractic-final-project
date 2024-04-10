@@ -46,4 +46,10 @@ public class UserDAO {
         return jdbcTemplate.query("SELECT * FROM \"USERS\" WHERE \"LAST_NAME\" = ? ", new UserRowMapper(), lastName);
     }
 
+    public int updateUser(String username, String firstName, String lastName, String email, String password, Integer id){
+        return jdbcTemplate.update("UPDATE \"USERS\" SET \"USERNAME\" = ?, \"FIRST_NAME\" = ?, \"LAST_NAME\" = ?, \"EMAIL\" = ?, \"PASSWORD\" ? WHERE \"ID\" = ?", username, firstName, lastName, email, password, id );
+    }
+
+
+
 }

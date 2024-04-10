@@ -43,15 +43,15 @@ public class UserController {
         return userService.getUserByUsername(username);
     }
 
-    @GetMapping(value = "/users/firstName/{firstName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/first-name/{firstName}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<User> getUsersByFirstName(@PathVariable String firstName) {
         return userService.getUsersByFirstName(firstName);
     }
 
-    @GetMapping(value = "/users/lastName/{lastName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/last-name/{lastName}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<User> getUsersByLastName(@PathVariable String lastName) {
-        return userService.getUsersByFirstName(lastName);
+        return userService.getUsersByLastName(lastName);
     }
 }
