@@ -4,7 +4,7 @@ import org.springframework.lang.NonNull;
 
 public class User {
     @NonNull
-    private String id;
+    private Integer id;
     @NonNull
     private String username;
     @NonNull
@@ -18,11 +18,11 @@ public class User {
 
 
     @NonNull
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(@NonNull Integer id) {
         this.id = id;
     }
 

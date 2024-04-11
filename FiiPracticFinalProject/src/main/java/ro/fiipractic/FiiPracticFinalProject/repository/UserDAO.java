@@ -38,6 +38,14 @@ public class UserDAO {
         }
     }
 
+    public User getUserById(Integer id) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM \"USERS\" WHERE \"ID\" = ? ", new UserRowMapper(), id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new UserNotFoundException(String.format("User with id %s was not found", id));
+        }
+    }
+
     public List<User> getUsersByFirstName(String firstName){
         return jdbcTemplate.query("SELECT * FROM \"USERS\" WHERE \"FIRST_NAME\" = ? ", new UserRowMapper(), firstName);
     }

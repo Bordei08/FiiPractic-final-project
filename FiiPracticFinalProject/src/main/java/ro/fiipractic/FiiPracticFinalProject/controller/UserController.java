@@ -1,6 +1,5 @@
 package ro.fiipractic.FiiPracticFinalProject.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.service.UserService;
 import ro.fiipractic.FiiPracticFinalProject.util.UserLoginRequest;
-
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -20,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void registerUser(@RequestBody User user) {
         userService.registerUser(user);
@@ -38,9 +37,16 @@ public class UserController {
         userService.checkLogin(userLoginRequest.getUsername(), userLoginRequest.getPassword());
     }
 
-    @GetMapping(value = "/user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user-username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public User getUserByUsername(@PathVariable String username){
         return userService.getUserByUsername(username);
+    }
+
+    @GetMapping(value = "/user-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public User getUserByUsername(@PathVariable Integer id){
+        return userService.getUserById(id);
     }
 
     @GetMapping(value = "/users/first-name/{firstName}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,4 +60,11 @@ public class UserController {
     public List<User> getUsersByLastName(@PathVariable String lastName) {
         return userService.getUsersByLastName(lastName);
     }
+
+    @PatchMapping(value = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void patchUser(@PathVariable Integer id, @RequestBody Map<String, String> partialUser) {
+        userService.patchUser(id, partialUser);
+    }
+
 }

@@ -6,19 +6,23 @@ import org.springframework.stereotype.Service;
 import ro.fiipractic.FiiPracticFinalProject.exception.InvalidPasswordException;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.UserDAO;
+import ro.fiipractic.FiiPracticFinalProject.util.UserUtil;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements  UserService{
 
     private UserDAO userRepository;
     private PasswordEncryptionService passwordEncryptionService;
+    private UserUtil userUtil;
 
     @Autowired
-    public UserServiceImpl(UserDAO userRepository, PasswordEncryptionService passwordEncryptionService){
+    public UserServiceImpl(UserDAO userRepository, PasswordEncryptionService passwordEncryptionService, UserUtil userUtil){
         this.passwordEncryptionService = passwordEncryptionService;
         this.userRepository= userRepository;
+        this.userUtil = userUtil;
     }
 
     public void registerUser(User user){
@@ -46,6 +50,16 @@ public class UserServiceImpl implements  UserService{
 
     public  List<User> getUsersByLastName(String lastName) {
         return userRepository.getUsersByLastName(lastName);
+    }
+
+    public void patchUser(Integer id, Map<String, String> partialUser){
+        User user = userRepository.getUserById(id);
+        userUtil.patchUser(user,partialUser);
+        userRepository.updateUser(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getId());
+    }
+
+    public User getUserById(Integer id){
+        return userRepository.getUserById(id);
     }
 
 }
