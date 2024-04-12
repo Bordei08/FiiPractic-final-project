@@ -1,0 +1,111 @@
+-- Database: FiiPractic
+
+-- DROP DATABASE IF EXISTS "FiiPractic";
+
+CREATE DATABASE "FiiPractic"
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+-- Table: public.USERS
+
+-- DROP TABLE IF EXISTS public."USERS";
+
+CREATE TABLE IF NOT EXISTS public."USERS"
+(
+    "ID" integer NOT NULL DEFAULT nextval('"USERS_ID_seq"'::regclass),
+    "USERNAME" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "FIRST_NAME" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "LAST_NAME" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "EMAIL" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "PASSWORD" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "USERS_pkey" PRIMARY KEY ("ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."USERS"
+    OWNER to postgres;
+
+
+-- Table: public.POSTS
+
+-- DROP TABLE IF EXISTS public."POSTS";
+
+CREATE TABLE IF NOT EXISTS public."POSTS"
+(
+    "ID" integer NOT NULL,
+    "MESSAGE" "char"[] NOT NULL,
+    "TIMESTAMP" timestamp with time zone NOT NULL,
+    "CREATOR_ID" integer NOT NULL,
+    CONSTRAINT "POSTS_pkey" PRIMARY KEY ("ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."POSTS"
+    OWNER to postgres;
+
+
+-- Table: public.LIKES
+
+-- DROP TABLE IF EXISTS public."LIKES";
+
+CREATE TABLE IF NOT EXISTS public."LIKES"
+(
+    "ID" integer NOT NULL,
+    "ID_USER" integer NOT NULL,
+    "ID_POST" integer NOT NULL,
+    CONSTRAINT "LIKES_pkey" PRIMARY KEY ("ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."LIKES"
+    OWNER to postgres;
+
+-- Table: public.FOLLOW
+
+-- DROP TABLE IF EXISTS public."FOLLOW";
+
+CREATE TABLE IF NOT EXISTS public."FOLLOW"
+(
+    "ID" integer NOT NULL,
+    "ID_USER2" integer NOT NULL,
+    "TIMESTAMP" timestamp with time zone NOT NULL,
+    "ID_USER1" integer NOT NULL,
+    CONSTRAINT "FOLLOW_pkey" PRIMARY KEY ("ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."FOLLOW"
+    OWNER to postgres;
+
+
+-- Table: public.REPLIES
+
+-- DROP TABLE IF EXISTS public."REPLIES";
+
+CREATE TABLE IF NOT EXISTS public."REPLIES"
+(
+    "ID" integer NOT NULL,
+    "ID_POST" integer NOT NULL,
+    "ID_PARENT" integer,
+    "MESSAGE" "char"[] NOT NULL,
+    "ID_USER" integer NOT NULL,
+    CONSTRAINT "REPLIES_pkey" PRIMARY KEY ("ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."REPLIES"
+    OWNER to postgres;
+
+
