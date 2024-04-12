@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/rest/api/fiipractic-final-project")
 public class UserController {
     private final UserService userService;
 
