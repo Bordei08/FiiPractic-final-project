@@ -4,36 +4,36 @@ import org.springframework.lang.NonNull;
 
 public class Like {
     @NonNull
-    private Integer id;
+    private String id;
     @NonNull
-    private Integer userid;
+    private String userid;
     @NonNull
-    private Integer postId;
+    private String postId;
 
     @NonNull
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
     @NonNull
-    public Integer getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(@NonNull Integer userid) {
+    public void setUserid(@NonNull String userid) {
         this.userid = userid;
     }
 
     @NonNull
-    public Integer getPostId() {
+    public String getPostId() {
         return postId;
     }
 
-    public void setPostId(@NonNull Integer postId) {
+    public void setPostId(@NonNull String postId) {
         this.postId = postId;
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.lang.NonNull;
 
 public class User {
     @NonNull
-    private Integer id;
+    private String id;
     @NonNull
     private String username;
     @NonNull
@@ -18,12 +18,21 @@ public class User {
 
 
     @NonNull
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull String id) {
         this.id = id;
+    }
+
+    @NonNull
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(@NonNull String username) {
+        this.username = username;
     }
 
     @NonNull
@@ -61,14 +70,4 @@ public class User {
     public void setPassword(@NonNull String password) {
         this.password = password;
     }
-
-    @NonNull
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(@NonNull String username) {
-        this.username = username;
-    }
-
 }

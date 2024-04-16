@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import ro.fiipractic.FiiPracticFinalProject.exception.UsernameAlreadyExistsException;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.service.UserService;
 import ro.fiipractic.FiiPracticFinalProject.util.UserLoginRequest;
@@ -22,7 +23,7 @@ public class UserController {
 
     @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerUser(@RequestBody User user) {
+    public void registerUser(@RequestBody User user) throws UsernameAlreadyExistsException {
         userService.registerUser(user);
     }
 
@@ -46,7 +47,7 @@ public class UserController {
 
     @GetMapping(value = "/user-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public User getUserByUsername(@PathVariable Integer id){
+    public User getUserById(@PathVariable String id){
         return userService.getUserById(id);
     }
 
@@ -64,7 +65,7 @@ public class UserController {
 
     @PatchMapping(value = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void patchUser(@PathVariable Integer id, @RequestBody Map<String, String> partialUser) {
+    public void patchUser(@PathVariable String id, @RequestBody Map<String, String> partialUser) {
         userService.patchUser(id, partialUser);
     }
 

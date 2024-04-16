@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import ro.fiipractic.FiiPracticFinalProject.exception.UserNotFoundException;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.mapper.UserRowMapper;
+import ro.fiipractic.FiiPracticFinalProject.service.UserIdGenerator;
+import ro.fiipractic.FiiPracticFinalProject.service.UserIdGeneratorImpl;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -16,14 +18,18 @@ import java.util.List;
 public class UserDAO {
 
     private JdbcTemplate jdbcTemplate;
+    private UserIdGenerator userIdGenerator;
 
     @Autowired
     public void setDataSource(final DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
+        this.userIdGenerator = new UserIdGeneratorImpl(true);
+
     }
 
     public int createUser(String username, String firstName, String lastName, String email, String password) {
-        return jdbcTemplate.update("INSERT INTO \"USERS\"(\"USERNAME\",\"FIRST_NAME\", \"LAST_NAME\", \"EMAIL\", \"PASSWORD\") VALUES (?,?, ?, ?, ?)", username, firstName, lastName, email, password);
+        String id = userIdGenerator.generateUserId(username, firstName, lastName);
+        return jdbcTemplate.update("INSERT INTO \"USERS\"( \"ID\",\"USERNAME\",\"FIRST_NAME\", \"LAST_NAME\", \"EMAIL\", \"PASSWORD\") VALUES (?,?,?, ?, ?, ?)",id, username, firstName, lastName, email, password);
     }
 
     public List<User> getAllUsers() {
@@ -38,7 +44,7 @@ public class UserDAO {
         }
     }
 
-    public User getUserById(Integer id) {
+    public User getUserById(String id) {
         try {
             return jdbcTemplate.queryForObject("SELECT * FROM \"USERS\" WHERE \"ID\" = ? ", new UserRowMapper(), id);
         } catch (EmptyResultDataAccessException ex) {
@@ -54,7 +60,7 @@ public class UserDAO {
         return jdbcTemplate.query("SELECT * FROM \"USERS\" WHERE \"LAST_NAME\" = ? ", new UserRowMapper(), lastName);
     }
 
-    public int updateUser(String username, String firstName, String lastName, String email, String password, Integer id){
+    public int updateUser(String username, String firstName, String lastName, String email, String password, String id){
         return jdbcTemplate.update("UPDATE \"USERS\" SET \"USERNAME\" = ?, \"FIRST_NAME\" = ?, \"LAST_NAME\" = ?, \"EMAIL\" = ?, \"PASSWORD\" ? WHERE \"ID\" = ?", username, firstName, lastName, email, password, id );
     }
 

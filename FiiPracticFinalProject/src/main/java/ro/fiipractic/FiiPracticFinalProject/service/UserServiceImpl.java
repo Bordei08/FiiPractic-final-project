@@ -4,6 +4,8 @@ import org.apache.catalina.realm.UserDatabaseRealm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.fiipractic.FiiPracticFinalProject.exception.InvalidPasswordException;
+import ro.fiipractic.FiiPracticFinalProject.exception.UserNotFoundException;
+import ro.fiipractic.FiiPracticFinalProject.exception.UsernameAlreadyExistsException;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.UserDAO;
 import ro.fiipractic.FiiPracticFinalProject.util.UserUtil;
@@ -25,8 +27,16 @@ public class UserServiceImpl implements  UserService{
         this.userUtil = userUtil;
     }
 
-    public void registerUser(User user){
-        userRepository.createUser(user.getUsername() ,user.getFirstName(), user.getLastName(), user.getEmail(), passwordEncryptionService.eencryptPassword(user.getPassword()));
+    public void registerUser(User user) throws UsernameAlreadyExistsException {
+        try{
+            userRepository.getUserByUsername(user.getUsername());
+        }
+        catch (UserNotFoundException e){
+            userRepository.createUser(user.getUsername() ,user.getFirstName(), user.getLastName(), user.getEmail(), passwordEncryptionService.eencryptPassword(user.getPassword()));
+            return;
+        }
+
+        throw new UsernameAlreadyExistsException("This username is already in use");
     }
 
     public List<User> getAllUsers(){
@@ -52,13 +62,13 @@ public class UserServiceImpl implements  UserService{
         return userRepository.getUsersByLastName(lastName);
     }
 
-    public void patchUser(Integer id, Map<String, String> partialUser){
+    public void patchUser(String id, Map<String, String> partialUser){
         User user = userRepository.getUserById(id);
         userUtil.patchUser(user,partialUser);
         userRepository.updateUser(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getId());
     }
 
-    public User getUserById(Integer id){
+    public User getUserById(String id){
         return userRepository.getUserById(id);
     }
 

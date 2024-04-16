@@ -5,29 +5,29 @@ import java.sql.Timestamp;
 
 public class Post {
     @NonNull
-    private Integer id;
+    private String id;
     @NonNull
-    private Integer creatorId;
+    private String creatorId;
     @NonNull
     private String message;
     @NonNull
     private Timestamp timestamp;
 
     @NonNull
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
     @NonNull
-    public Integer getCreatorId() {
+    public String getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(@NonNull Integer creatorId) {
+    public void setCreatorId(@NonNull String creatorId) {
         this.creatorId = creatorId;
     }
 

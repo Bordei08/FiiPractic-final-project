@@ -4,38 +4,41 @@ import org.springframework.lang.NonNull;
 
 public class Reply {
     @NonNull
-    private Integer id;
+    private String id;
     @NonNull
-    private Integer postId;
-    private Integer parentId;
+    private String postId;
+    private String parentId;
     @NonNull
     private String message;
     @NonNull
-    private Integer userId;
+    private String userId;
 
     @NonNull
-    public Integer getId() {
+    private Boolean varPublic;
+
+    @NonNull
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
     @NonNull
-    public Integer getPostId() {
+    public String getPostId() {
         return postId;
     }
 
-    public void setPostId(@NonNull Integer postId) {
+    public void setPostId(@NonNull String postId) {
         this.postId = postId;
     }
 
-    public Integer getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
@@ -49,11 +52,20 @@ public class Reply {
     }
 
     @NonNull
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(@NonNull Integer userId) {
+    public void setUserId(@NonNull String userId) {
         this.userId = userId;
+    }
+
+    @NonNull
+    public Boolean getVarPublic() {
+        return varPublic;
+    }
+
+    public void setVarPublic(@NonNull Boolean varPublic) {
+        this.varPublic = varPublic;
     }
 }
