@@ -7,11 +7,12 @@ import org.springframework.stereotype.Repository;
 import ro.fiipractic.FiiPracticFinalProject.exception.UserNotFoundException;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.mapper.UserRowMapper;
+import ro.fiipractic.FiiPracticFinalProject.service.FollowIdGenerator;
+import ro.fiipractic.FiiPracticFinalProject.service.FollowIdGeneratorImpl;
 import ro.fiipractic.FiiPracticFinalProject.service.UserIdGenerator;
 import ro.fiipractic.FiiPracticFinalProject.service.UserIdGeneratorImpl;
 
 import javax.sql.DataSource;
-import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -20,11 +21,13 @@ public class UserDAO {
 
     private JdbcTemplate jdbcTemplate;
     private UserIdGenerator userIdGenerator;
+    private FollowIdGenerator followIdGenerator;
 
     @Autowired
     public void setDataSource(final DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
         this.userIdGenerator = new UserIdGeneratorImpl(true);
+        this.followIdGenerator = new FollowIdGeneratorImpl(true);
 
     }
 
@@ -70,16 +73,5 @@ public class UserDAO {
     }
 
 
-    //TO DO
-    //FollowIdGenerator
-    //new function in UserService
-    public int createNewFollower(String user1Id, String user2ID, Timestamp timestamp){
-        return 1;
-    }
 
-    //TO DO
-    //new function in UserService
-    public int deleteFollower(String user1Id, String user2Id){
-        return 1;
-    }
 }
