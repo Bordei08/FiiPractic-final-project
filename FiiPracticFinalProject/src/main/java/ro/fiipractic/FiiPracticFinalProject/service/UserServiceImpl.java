@@ -72,4 +72,8 @@ public class UserServiceImpl implements  UserService{
         return userRepository.getUserById(id);
     }
 
+    public void deleteUser(String id){
+        userRepository.deleteUser(id);
+    }
+
 }

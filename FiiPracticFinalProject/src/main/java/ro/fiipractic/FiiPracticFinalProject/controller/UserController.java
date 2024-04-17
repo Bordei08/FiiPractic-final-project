@@ -69,4 +69,10 @@ public class UserController {
         userService.patchUser(id, partialUser);
     }
 
+    @DeleteMapping(value = "/user/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable String id) {
+        userService.deleteUser(id);
+    }
+
 }

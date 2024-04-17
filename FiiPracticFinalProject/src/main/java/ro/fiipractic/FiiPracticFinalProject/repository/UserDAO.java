@@ -11,6 +11,7 @@ import ro.fiipractic.FiiPracticFinalProject.service.UserIdGenerator;
 import ro.fiipractic.FiiPracticFinalProject.service.UserIdGeneratorImpl;
 
 import javax.sql.DataSource;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -64,6 +65,21 @@ public class UserDAO {
         return jdbcTemplate.update("UPDATE \"USERS\" SET \"USERNAME\" = ?, \"FIRST_NAME\" = ?, \"LAST_NAME\" = ?, \"EMAIL\" = ?, \"PASSWORD\" ? WHERE \"ID\" = ?", username, firstName, lastName, email, password, id );
     }
 
+    public int deleteUser(String id){
+        return jdbcTemplate.update("DELETE FROM \"USERS\" WHERE \"ID\" = ?", id);
+    }
 
 
+    //TO DO
+    //FollowIdGenerator
+    //new function in UserService
+    public int createNewFollower(String user1Id, String user2ID, Timestamp timestamp){
+        return 1;
+    }
+
+    //TO DO
+    //new function in UserService
+    public int deleteFollower(String user1Id, String user2Id){
+        return 1;
+    }
 }
