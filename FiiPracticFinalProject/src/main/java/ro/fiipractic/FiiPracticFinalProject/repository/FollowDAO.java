@@ -2,12 +2,11 @@ package ro.fiipractic.FiiPracticFinalProject.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ro.fiipractic.FiiPracticFinalProject.models.Follow;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.mapper.FollowRowMapper;
 import ro.fiipractic.FiiPracticFinalProject.repository.mapper.UserRowMapper;
-import ro.fiipractic.FiiPracticFinalProject.service.FollowIdGenerator;
-import ro.fiipractic.FiiPracticFinalProject.service.FollowIdGeneratorImpl;
+import ro.fiipractic.FiiPracticFinalProject.service.id.FollowIdGenerator;
+import ro.fiipractic.FiiPracticFinalProject.service.id.FollowIdGeneratorImpl;
 
 import javax.sql.DataSource;
 import java.sql.Timestamp;

@@ -19,7 +19,6 @@ public class FollowServiceImpl implements FollowService {
         this.followRepository = followRepository;
     }
 
-
     @Override
     public void createFollow(String user1Id, String user2Id, Timestamp timestamp) {
         followRepository.createNewFollower(user1Id, user2Id, timestamp);
@@ -37,7 +36,7 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public List<User> getFollowers(String user1Id) {
-       return  followRepository.getFollowers(user1Id);
+        return followRepository.getFollowers(user1Id);
     }
 
     @Override

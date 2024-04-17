@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import ro.fiipractic.FiiPracticFinalProject.exception.UserNotFoundException;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.mapper.UserRowMapper;
-import ro.fiipractic.FiiPracticFinalProject.service.FollowIdGenerator;
-import ro.fiipractic.FiiPracticFinalProject.service.FollowIdGeneratorImpl;
-import ro.fiipractic.FiiPracticFinalProject.service.UserIdGenerator;
-import ro.fiipractic.FiiPracticFinalProject.service.UserIdGeneratorImpl;
+import ro.fiipractic.FiiPracticFinalProject.service.id.FollowIdGenerator;
+import ro.fiipractic.FiiPracticFinalProject.service.id.FollowIdGeneratorImpl;
+import ro.fiipractic.FiiPracticFinalProject.service.id.UserIdGenerator;
+import ro.fiipractic.FiiPracticFinalProject.service.id.UserIdGeneratorImpl;
 
 import javax.sql.DataSource;
 import java.util.List;

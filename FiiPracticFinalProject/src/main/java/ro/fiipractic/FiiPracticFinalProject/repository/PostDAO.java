@@ -3,8 +3,8 @@ package ro.fiipractic.FiiPracticFinalProject.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ro.fiipractic.FiiPracticFinalProject.service.PostIdGenerator;
-import ro.fiipractic.FiiPracticFinalProject.service.PostIdGeneratorImpl;
+import ro.fiipractic.FiiPracticFinalProject.service.id.PostIdGenerator;
+import ro.fiipractic.FiiPracticFinalProject.service.id.PostIdGeneratorImpl;
 
 import javax.sql.DataSource;
 import java.sql.Timestamp;
