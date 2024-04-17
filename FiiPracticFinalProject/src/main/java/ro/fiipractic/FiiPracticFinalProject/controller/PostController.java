@@ -6,8 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ro.fiipractic.FiiPracticFinalProject.models.Post;
-import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.service.PostService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rest/api/fiipractic-final-project")
@@ -16,7 +17,7 @@ public class PostController {
     private PostService postService;
 
     @Autowired
-    public PostController(PostService postService){
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 
@@ -24,6 +25,38 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     public void registerUser(@RequestBody Post post) {
         postService.addPost(post);
+    }
+
+
+    @DeleteMapping(value = "/post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletepost(@PathVariable String postId) {
+        postService.deletePost(postId);
+    }
+
+    @GetMapping(value = "/user/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Post getPostById(@PathVariable String postId) {
+        return postService.getPostById(postId);
+    }
+
+    @GetMapping(value = "/posts-user/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Post> getPostsByUser(@PathVariable String userId) {
+        return postService.getAllPostByUserId(userId);
+    }
+
+    @GetMapping(value = "/user-feed/{uuserId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Post> getFeedForUser(@PathVariable String uuserId) {
+        return postService.getFeed(uuserId);
+    }
+
+
+    @PatchMapping(value = "/post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void patchPost(@PathVariable String postId, @RequestBody String message) {
+        postService.updatePost(postId, message);
     }
 
 }

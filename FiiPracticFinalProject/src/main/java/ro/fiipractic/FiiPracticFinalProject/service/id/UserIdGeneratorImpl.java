@@ -20,4 +20,5 @@ public class UserIdGeneratorImpl implements UserIdGenerator {
         return isSignatureEnabled ? "uuid:".concat(initialFirstNameAndLastName) : initialFirstNameAndLastName;
 
     }
+
 }
