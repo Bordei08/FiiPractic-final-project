@@ -44,8 +44,10 @@ CREATE TABLE IF NOT EXISTS public."POSTS"
     "MESSAGE" character varying(255) COLLATE pg_catalog."default",
     "TIMESTAMP" timestamp with time zone NOT NULL,
     "CREATOR_ID" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "REPOST_ID" character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT "POSTS_pkey" PRIMARY KEY ("ID")
 )
+
 
 TABLESPACE pg_default;
 
@@ -105,4 +107,22 @@ CREATE TABLE IF NOT EXISTS public."REPLIES"
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."REPLIES"
+    OWNER to postgres;
+
+
+-- Table: public.MENTIONS
+
+-- DROP TABLE IF EXISTS public."MENTIONS";
+
+CREATE TABLE IF NOT EXISTS public."MENTIONS"
+(
+    "ID" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "USER_ID" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "POST_ID" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "MENTIONS_pkey" PRIMARY KEY ("ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."MENTIONS"
     OWNER to postgres;
