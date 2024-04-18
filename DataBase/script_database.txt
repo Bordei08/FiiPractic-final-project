@@ -41,13 +41,13 @@ ALTER TABLE IF EXISTS public."USERS"
 CREATE TABLE IF NOT EXISTS public."POSTS"
 (
     "ID" character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    "MESSAGE" character varying(255) COLLATE pg_catalog."default",
+    "MESSAGE" character varying(255) COLLATE pg_catalog."default" NOT NULL,
     "TIMESTAMP" timestamp with time zone NOT NULL,
     "CREATOR_ID" character varying(255) COLLATE pg_catalog."default" NOT NULL,
     "REPOST_ID" character varying(255) COLLATE pg_catalog."default",
+    "SHARER_ID" character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT "POSTS_pkey" PRIMARY KEY ("ID")
 )
-
 
 TABLESPACE pg_default;
 
