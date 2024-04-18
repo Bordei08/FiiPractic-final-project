@@ -9,6 +9,7 @@ import ro.fiipractic.FiiPracticFinalProject.models.Reply;
 import ro.fiipractic.FiiPracticFinalProject.service.ReplyService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/rest/api/fiipractic-final-project")
@@ -64,8 +65,8 @@ public class ReplyController {
 
     @PatchMapping(value = "/reply/{replyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void patchReply(@PathVariable String replyId, @RequestBody String message){
-        replyService.updateReply(replyId, message);
+    public void patchReply(@PathVariable String replyId, @RequestBody Map<String, String> body){
+        replyService.updateReply(replyId, body.get("message"));
     }
 
 }

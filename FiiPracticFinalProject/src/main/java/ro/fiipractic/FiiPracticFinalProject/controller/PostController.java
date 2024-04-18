@@ -9,6 +9,7 @@ import ro.fiipractic.FiiPracticFinalProject.models.Post;
 import ro.fiipractic.FiiPracticFinalProject.service.PostService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/rest/api/fiipractic-final-project")
@@ -30,11 +31,11 @@ public class PostController {
 
     @DeleteMapping(value = "/post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletepost(@PathVariable String postId) {
+    public void deletePost(@PathVariable String postId) {
         postService.deletePost(postId);
     }
 
-    @GetMapping(value = "/user/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Post getPostById(@PathVariable String postId) {
         return postService.getPostById(postId);
@@ -46,17 +47,17 @@ public class PostController {
         return postService.getAllPostByUserId(userId);
     }
 
-    @GetMapping(value = "/user-feed/{uuserId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user-feed/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<Post> getFeedForUser(@PathVariable String uuserId) {
-        return postService.getFeed(uuserId);
+    public List<Post> getFeedForUser(@PathVariable String userId) {
+        return postService.getFeed(userId);
     }
 
 
     @PatchMapping(value = "/post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void patchPost(@PathVariable String postId, @RequestBody String message) {
-        postService.updatePost(postId, message);
+    public void patchPost(@PathVariable String postId, @RequestBody Map<String,String> body) {
+        postService.updatePost(postId, body.get("message"));
     }
 
 }

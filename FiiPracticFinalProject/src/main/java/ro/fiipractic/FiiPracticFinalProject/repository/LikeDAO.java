@@ -21,14 +21,14 @@ public class LikeDAO {
     private LikeIdGenerator likeIdGenerator;
 
     @Autowired
-    public LikeDAO(DataSource dataSource){
+    public LikeDAO(final DataSource dataSource){
         this.jdbcTemplate =  new JdbcTemplate(dataSource);
         this.likeIdGenerator = new LikeIdGeneratorImpl(true);
     }
 
     public int  createLike(String userId, String postId){
         String id = likeIdGenerator.generateLikeId(userId, postId);
-        return jdbcTemplate.update("INSERT INTO  \"LIKES\" (  \"ID\" ,\"ID_USER\", \"ID_POST\") VALUES(?,?,?)", id,userId, postId);
+        return jdbcTemplate.update("INSERT INTO  \"LIKES\" (  \"ID\" ,\"USER_ID\", \"POST_ID\") VALUES(?,?,?)", id,userId, postId);
     }
 
 

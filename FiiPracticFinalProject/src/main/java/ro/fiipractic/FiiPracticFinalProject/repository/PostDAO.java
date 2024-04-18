@@ -34,7 +34,7 @@ public class PostDAO {
     }
 
     public int updateMessage(String id, String message){
-        return jdbcTemplate.update("UPDATE  \"POSTs\" SET  \"MESSAGE\" = ? WHERE \"ID\" = ?  ", message, id);
+        return jdbcTemplate.update("UPDATE  \"POSTS\" SET  \"MESSAGE\" = ? WHERE \"ID\" = ?  ", message, id);
     }
 
     public Post getPostById(String id){
@@ -42,12 +42,12 @@ public class PostDAO {
     }
 
     public List<Post> getAllPostByUserId(String userId){
-        return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"ID\" = ?", new PostRowMapper(), userId);
+        return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"CREATOR_ID\" = ?", new PostRowMapper(), userId);
     }
 
     public List<Post> getFeed(String userId){
-        return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"ID\" IN (" +
-                "SELECT \"USER2_ID\" FROM \"FOLLOW\" WHERE \"UER1_ID\" = ? )", new PostRowMapper(), userId);
+        return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"CREATOR_ID\" IN (" +
+                "SELECT \"USER2_ID\" FROM \"FOLLOW\" WHERE \"USER1_ID\" = ? )", new PostRowMapper(), userId);
     }
 
 }

@@ -40,7 +40,7 @@ public class FollowController {
         return followService.getFollow(user2Id);
     }
 
-    @DeleteMapping(value = "/followw/{use1Id}/{user2Id}")
+    @DeleteMapping(value = "/follow/{use1Id}/{user2Id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFollow(@PathVariable String use1Id,@PathVariable String user2Id) {
         followService.deleteFollow(use1Id, user2Id);

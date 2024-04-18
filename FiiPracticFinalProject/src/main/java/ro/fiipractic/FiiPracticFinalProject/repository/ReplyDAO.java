@@ -26,7 +26,7 @@ public class ReplyDAO {
 
     public int createReply(String postId, String parentId, String userId, String message, boolean varPublic){
         String id = replyIdGenerator.generateReplyId(userId,postId, parentId);
-        return jdbcTemplate.update("INSERT INTO  \"REPLIES\"(  \"ID\" ,\"ID_POST\", \"ID_PARENT\", \"MESSAGE\", \"ID_USER\", \"PUBLIC\") VALUES(?,?,?,?,?,?)", id ,postId, parentId, message, userId, varPublic);
+        return jdbcTemplate.update("INSERT INTO  \"REPLIES\"(  \"ID\" ,\"POST_ID\", \"PARENT_ID\", \"MESSAGE\", \"USER_ID\", \"PUBLIC\") VALUES(?,?,?,?,?,?)", id ,postId, parentId, message, userId, varPublic);
     }
 
     public int deleteReply(String id){
@@ -34,7 +34,7 @@ public class ReplyDAO {
     }
 
     public Reply getReplyById(String id){
-        return jdbcTemplate.queryForObject("SELECT * FFROM \"REPLIES\" WHERE \"ID\" = ?", new ReplyRowMapper(), id);
+        return jdbcTemplate.queryForObject("SELECT * FROM \"REPLIES\" WHERE \"ID\" = ?", new ReplyRowMapper(), id);
     }
 
     public Reply getParentReplyByParentId(String parentId){
@@ -54,7 +54,7 @@ public class ReplyDAO {
     }
 
     public int updateMessage(String id, String message){
-        return jdbcTemplate.update("UPDATE  \"REPLICES\" SET  \"MESSAGE\" = ? WHERE \"ID\" = ?  ", message, id);
+        return jdbcTemplate.update("UPDATE  \"REPLIES\" SET  \"MESSAGE\" = ? WHERE \"ID\" = ?  ", message, id);
     }
 
 

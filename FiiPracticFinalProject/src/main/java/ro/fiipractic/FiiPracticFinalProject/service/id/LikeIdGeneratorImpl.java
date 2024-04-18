@@ -14,7 +14,7 @@ public class LikeIdGeneratorImpl implements LikeIdGenerator {
 
     @Override
     public String generateLikeId(String userId, String postId) {
-        String result = userId.substring(0,1).concat(postId);
+        String result = userId + postId;
         result = Integer.toString(Objects.hash(result));
         return isSignatureEnabled ? "ulid".concat(result) : result;
     }

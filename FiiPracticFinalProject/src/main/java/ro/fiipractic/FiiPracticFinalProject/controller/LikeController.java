@@ -18,36 +18,37 @@ public class LikeController {
     private LikeService likeService;
 
     @Autowired
-    public LikeController(LikeService likeService){
+    public LikeController(LikeService likeService) {
         this.likeService = likeService;
     }
 
     @PostMapping(value = "/like", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createLike(@RequestBody Like like){
-        likeService.createLike(like.getUserid(), like.getPostId());
+    public void createLike(@RequestBody Like like) {
+        likeService.createLike(like.getUserId(), like.getPostId());
     }
 
     @GetMapping(value = "/like/{likeId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Like getLikeById(@PathVariable String likeId){
+    public Like getLikeById(@PathVariable String likeId) {
         return likeService.getLikeById(likeId);
     }
 
     @DeleteMapping(value = "/like/{likeId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteLike(@PathVariable String likeId){
+    public void deleteLike(@PathVariable String likeId) {
         likeService.deleteLike(likeId);
     }
+
     @GetMapping(value = "/posts-user-likes/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<Post> getPostsByUserLikes(@PathVariable String userId){
+    public List<Post> getPostsByUserLikes(@PathVariable String userId) {
         return likeService.getAllPostsByUserLikes(userId);
     }
 
     @GetMapping(value = "/users-post-likes/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<User> getUsersByPostLikes(@PathVariable String postId){
+    public List<User> getUsersByPostLikes(@PathVariable String postId) {
         return likeService.getAllUsersByPostLikes(postId);
     }
 

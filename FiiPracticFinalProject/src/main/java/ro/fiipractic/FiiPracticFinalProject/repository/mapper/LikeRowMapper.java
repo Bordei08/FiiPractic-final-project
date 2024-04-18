@@ -13,7 +13,7 @@ public class LikeRowMapper implements RowMapper<Like> {
     public Like mapRow(ResultSet rs, int rowNum) throws SQLException {
         Like like = new Like();
         like.setId(rs.getString("ID"));
-        like.setUserid(rs.getString("USER_ID"));
+        like.setUserId(rs.getString("USER_ID"));
         like.setPostId(rs.getString("POST_ID"));
         return like;
     }

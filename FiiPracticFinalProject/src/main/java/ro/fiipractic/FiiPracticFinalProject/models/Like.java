@@ -6,7 +6,7 @@ public class Like {
     @NonNull
     private String id;
     @NonNull
-    private String userid;
+    private String userId;
     @NonNull
     private String postId;
 
@@ -20,12 +20,12 @@ public class Like {
     }
 
     @NonNull
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(@NonNull String userid) {
-        this.userid = userid;
+    public void setUserId(@NonNull String userId) {
+        this.userId = userId;
     }
 
     @NonNull
