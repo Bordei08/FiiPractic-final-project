@@ -3,28 +3,38 @@ package ro.fiipractic.FiiPracticFinalProject.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.fiipractic.FiiPracticFinalProject.models.Reply;
+import ro.fiipractic.FiiPracticFinalProject.repository.PostDAO;
 import ro.fiipractic.FiiPracticFinalProject.repository.ReplyDAO;
+import ro.fiipractic.FiiPracticFinalProject.repository.UserDAO;
 
 import java.util.List;
 
 @Service
-public class ReplyServiceImpl implements  ReplyService {
+public class ReplyServiceImpl implements ReplyService {
 
     private ReplyDAO replyRepository;
-
+    private UserDAO userRepository;
+    private PostDAO postRepository;
 
     @Autowired
-    public ReplyServiceImpl(ReplyDAO replyRepository){
+    public ReplyServiceImpl(ReplyDAO replyRepository, UserDAO userRepository, PostDAO postRepository) {
         this.replyRepository = replyRepository;
+        this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     @Override
     public void createReply(String userId, String postId, String parentId, String message, boolean varPublic) {
+        userRepository.getUserById(userId);
+        postRepository.getPostById(postId);
+        if (parentId != null)
+            replyRepository.getReplyById(parentId);
         replyRepository.createReply(postId, parentId, userId, message, varPublic);
     }
 
     @Override
     public void deleteReply(String id) {
+        replyRepository.getReplyById(id);
         replyRepository.deleteReply(id);
     }
 
@@ -53,7 +63,7 @@ public class ReplyServiceImpl implements  ReplyService {
         return replyRepository.getAllRepliesById(id);
     }
 
-    public void updateReply(String replyId, String message){
+    public void updateReply(String replyId, String message) {
         replyRepository.updateMessage(replyId, message);
     }
 

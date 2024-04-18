@@ -2,6 +2,9 @@ package ro.fiipractic.FiiPracticFinalProject.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ro.fiipractic.FiiPracticFinalProject.exception.EntityAlreadyExistsException;
+import ro.fiipractic.FiiPracticFinalProject.exception.EntityNotFoundException;
+import ro.fiipractic.FiiPracticFinalProject.models.Follow;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.mapper.FollowRowMapper;
 import ro.fiipractic.FiiPracticFinalProject.repository.mapper.UserRowMapper;
@@ -26,15 +29,29 @@ public class FollowDAO {
 
     public int createNewFollower(String user1Id, String user2Id, Timestamp timestamp) {
         String id = followIdGenerator.generateFollowId(user1Id, user2Id, timestamp);
-        return jdbcTemplate.update("INSERT INTO \"FOLLOW\"(\"ID\", \"USER1_ID\", \"USER2_ID\", \"TIMESTAMP\") VALUES(?,?,?,?) ", id, user1Id, user2Id, timestamp);
+        try {
+            return jdbcTemplate.update("INSERT INTO \"FOLLOW\"(\"ID\", \"USER1_ID\", \"USER2_ID\", \"TIMESTAMP\") VALUES(?,?,?,?) ", id, user1Id, user2Id, timestamp);
+        } catch (Exception e) {
+            throw new EntityAlreadyExistsException("Already exist a foolow with id : " + id);
+        }
     }
 
-    public int deleteFollower(String user1Id, String user2Id) {
-        return jdbcTemplate.update("DELETE FROM \"FOLLOW\" WHERE \"USER1_ID\" = ? AND \"USER2_ID\" = ?", user1Id, user2Id);
+    public Follow getFollowById(String id) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM \"FOLLOW\" WHERE \"ID\" = ?", new FollowRowMapper(), id);
+        }catch(Exception e){
+            throw new EntityNotFoundException("Not exist a follow with id : " +id);
+        }
+    }
+
+    public int deleteFollower(String id) {
+        return jdbcTemplate.update("DELETE FROM \"FOLLOW\" WHERE \"ID\" = ?", id);
     }
 
     public boolean getFollowByUser1IdAndUser2Id(String user1Id, String user2Id) {
+
         return jdbcTemplate.query("SELECT * FROM  \"FOLLOW\" WHERE \"USER1_ID\" = ? AND  \"USER2_ID\" = ? ", new FollowRowMapper(), user1Id, user2Id).size() == 1;
+
     }
 
     public List<User> getFollowers(String user1Id) {

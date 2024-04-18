@@ -15,9 +15,9 @@ public class UserIdGeneratorImpl implements UserIdGenerator {
 
     @Override
     public String generateUserId(String username, String firstName, String lastName) {
-        String initialFirstNameAndLastName = username.substring(0, 1).concat(firstName).concat(lastName);
-        initialFirstNameAndLastName = Integer.toString(Objects.hash(initialFirstNameAndLastName));
-        return isSignatureEnabled ? "uuid:".concat(initialFirstNameAndLastName) : initialFirstNameAndLastName;
+        String result = username + firstName +lastName;
+        result = Integer.toString(Objects.hash(result));
+        return isSignatureEnabled ? "uuid:".concat(result) : result;
 
     }
 

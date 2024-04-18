@@ -6,12 +6,15 @@ import org.springframework.stereotype.Service;
 import ro.fiipractic.FiiPracticFinalProject.exception.InvalidPasswordException;
 import ro.fiipractic.FiiPracticFinalProject.exception.UserNotFoundException;
 import ro.fiipractic.FiiPracticFinalProject.exception.UsernameAlreadyExistsException;
+import ro.fiipractic.FiiPracticFinalProject.exception.WeakPasswordException;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.UserDAO;
 import ro.fiipractic.FiiPracticFinalProject.util.UserUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements  UserService{
@@ -32,6 +35,18 @@ public class UserServiceImpl implements  UserService{
             userRepository.getUserByUsername(user.getUsername());
         }
         catch (UserNotFoundException e){
+
+            Pattern uppercasePattern = Pattern.compile("[A-Z]");
+            Matcher uppercaseMatcher = uppercasePattern.matcher(user.getPassword());
+            Pattern digitPattern = Pattern.compile("[0-9]");
+            Matcher digitMatcher = digitPattern.matcher(user.getPassword());
+            Pattern specialCharPattern = Pattern.compile("[^A-Za-z0-9]");
+            Matcher specialCharMatcher = specialCharPattern.matcher(user.getPassword());
+
+            if(user.getPassword().length() < 8 || !uppercaseMatcher.find() || !digitMatcher.find() || !specialCharMatcher.find() ){
+                throw  new WeakPasswordException("The Password is weak");
+            }
+
             userRepository.createUser(user.getUsername() ,user.getFirstName(), user.getLastName(), user.getEmail(), passwordEncryptionService.eencryptPassword(user.getPassword()));
             return;
         }

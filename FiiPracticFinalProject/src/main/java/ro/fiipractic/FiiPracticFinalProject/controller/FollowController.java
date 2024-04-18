@@ -40,10 +40,17 @@ public class FollowController {
         return followService.getFollow(user2Id);
     }
 
-    @DeleteMapping(value = "/follow/{use1Id}/{user2Id}")
+    @GetMapping(value = "/follow/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Follow getFollowById(@PathVariable String id){
+        return followService.getFollowById(id);
+    }
+
+
+    @DeleteMapping(value = "/follow/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteFollow(@PathVariable String use1Id,@PathVariable String user2Id) {
-        followService.deleteFollow(use1Id, user2Id);
+    public void deleteFollow(@PathVariable String id) {
+        followService.deleteFollow(id);
     }
 
 }

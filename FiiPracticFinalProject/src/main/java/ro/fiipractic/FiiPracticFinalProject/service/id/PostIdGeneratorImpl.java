@@ -16,7 +16,7 @@ public class PostIdGeneratorImpl implements PostIdGenerator {
     @Override
     public String generatePostId(String creatorId, Timestamp timestamp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String result = creatorId.substring(0,1).concat(dateFormat.format(timestamp));
+        String result = creatorId + dateFormat.format(timestamp);
         result = Integer.toString(Objects.hash(result));
         return isSignatureEnabled ? "upid:".concat(result) : result;
     }

@@ -6,27 +6,36 @@ import ro.fiipractic.FiiPracticFinalProject.models.Like;
 import ro.fiipractic.FiiPracticFinalProject.models.Post;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.LikeDAO;
+import ro.fiipractic.FiiPracticFinalProject.repository.PostDAO;
+import ro.fiipractic.FiiPracticFinalProject.repository.UserDAO;
 
 import java.util.List;
 
 @Service
 public class LikeServiceImpl  implements  LikeService{
     private LikeDAO likeRepository;
+    private PostDAO postRepository;
+    private UserDAO userRepository;
 
 
     @Autowired
-    public LikeServiceImpl(LikeDAO likeRepository){
+    public LikeServiceImpl(LikeDAO likeRepository, PostDAO postRepository, UserDAO userRepository){
         this.likeRepository = likeRepository;
+        this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public void createLike(String userId, String postId) {
-            likeRepository.createLike(userId, postId);
+        userRepository.getUserById(userId);
+        postRepository.getPostById(postId);
+        likeRepository.createLike(userId, postId);
     }
 
     @Override
     public void deleteLike(String id) {
-            likeRepository.deleteLike(id);
+        likeRepository.getLikeById(id);
+        likeRepository.deleteLike(id);
     }
 
     @Override

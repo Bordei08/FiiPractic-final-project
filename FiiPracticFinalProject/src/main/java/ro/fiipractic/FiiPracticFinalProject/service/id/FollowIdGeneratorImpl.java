@@ -18,7 +18,7 @@ public class FollowIdGeneratorImpl implements FollowIdGenerator {
     @Override
     public String generateFollowId(String user1Id, String user2Id, Timestamp timestamp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String result = user1Id.substring(0,1).concat(user2Id).concat(dateFormat.format(timestamp));
+        String result = user1Id + user2Id + dateFormat.format(timestamp);
         result = Integer.toString(Objects.hash(result));
         return isSignatureEnabled ? "ufid".concat(result) : result;
     }

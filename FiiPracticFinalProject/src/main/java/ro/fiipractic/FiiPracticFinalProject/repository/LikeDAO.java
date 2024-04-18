@@ -3,6 +3,8 @@ package ro.fiipractic.FiiPracticFinalProject.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ro.fiipractic.FiiPracticFinalProject.exception.EntityAlreadyExistsException;
+import ro.fiipractic.FiiPracticFinalProject.exception.EntityNotFoundException;
 import ro.fiipractic.FiiPracticFinalProject.models.Like;
 import ro.fiipractic.FiiPracticFinalProject.models.Post;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
@@ -21,31 +23,39 @@ public class LikeDAO {
     private LikeIdGenerator likeIdGenerator;
 
     @Autowired
-    public LikeDAO(final DataSource dataSource){
-        this.jdbcTemplate =  new JdbcTemplate(dataSource);
+    public LikeDAO(final DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.likeIdGenerator = new LikeIdGeneratorImpl(true);
     }
 
-    public int  createLike(String userId, String postId){
+    public int createLike(String userId, String postId) {
         String id = likeIdGenerator.generateLikeId(userId, postId);
-        return jdbcTemplate.update("INSERT INTO  \"LIKES\" (  \"ID\" ,\"USER_ID\", \"POST_ID\") VALUES(?,?,?)", id,userId, postId);
+        try {
+            return jdbcTemplate.update("INSERT INTO  \"LIKES\" (  \"ID\" ,\"USER_ID\", \"POST_ID\") VALUES(?,?,?)", id, userId, postId);
+        } catch (Exception e) {
+            throw new EntityAlreadyExistsException("Already exist a like with id : " + id);
+        }
     }
 
 
-    public Like getLikeById(String id){
-        return jdbcTemplate.queryForObject("SELECT * FROM \"LIKES\" WHERE \"ID\" = ?", new LikeRowMapper(), id);
+    public Like getLikeById(String id) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM \"LIKES\" WHERE \"ID\" = ?", new LikeRowMapper(), id);
+        }catch(Exception e){
+            throw new EntityNotFoundException("Not exist a post with id : " + id);
+        }
     }
 
-    public int deleteLike(String id){
+    public int deleteLike(String id) {
         return jdbcTemplate.update("DELETE FROM \"LIKES\" WHERE \"ID\" = ?", id);
     }
 
-    public List<User>  getAllUsersForPost(String postId){
+    public List<User> getAllUsersForPost(String postId) {
         return jdbcTemplate.query("SELECT * FROM \"USERS\" WHERE \"ID\" IN " +
                 "(SELECT \"USER_ID\" FROM  \"LIKES\" WHERE \"POST_ID\" = ?)", new UserRowMapper(), postId);
     }
 
-    public List<Post> getAllPostForUser(String userId){
+    public List<Post> getAllPostForUser(String userId) {
         return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"ID\" IN " +
                 "(SELECT \"POST_ID\" FROM  \"LIKES\" WHERE \"USER_ID\" = ?)", new PostRowMapper(), userId);
     }
