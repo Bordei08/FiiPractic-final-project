@@ -45,11 +45,13 @@ public class LikeServiceImpl  implements  LikeService{
 
     @Override
     public List<User> getAllUsersByPostLikes(String postId) {
+        postRepository.getPostById(postId);
         return likeRepository.getAllUsersForPost(postId);
     }
 
     @Override
     public List<Post> getAllPostsByUserLikes(String userId) {
+        userRepository.getUserById(userId);
         return likeRepository.getAllPostForUser(userId);
     }
 }

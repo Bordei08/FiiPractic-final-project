@@ -14,6 +14,8 @@ public class PostRowMapper implements RowMapper<Post> {
         post.setMessage(rs.getString("MESSAGE"));
         post.setTimestamp(rs.getTimestamp("TIMESTAMP"));
         post.setCreatorId(rs.getString("CREATOR_ID"));
+        post.setRepostId(rs.getString("REPOST_ID"));
+        post.setSharerId(rs.getString("SHARER_ID"));
         return post;
     }
 }

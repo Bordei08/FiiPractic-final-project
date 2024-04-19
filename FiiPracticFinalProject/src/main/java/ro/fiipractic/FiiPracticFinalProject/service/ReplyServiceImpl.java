@@ -45,11 +45,13 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public List<Reply> getAllRepliesByUserId(String userId) {
+        userRepository.getUserById(userId);
         return replyRepository.getAllRepliesByUserId(userId);
     }
 
     @Override
     public List<Reply> getAllRepliesByPostId(String postId) {
+        postRepository.getPostById(postId);
         return replyRepository.getAllRepliesByPostId(postId);
     }
 
@@ -60,10 +62,12 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public List<Reply> getAllRepliesById(String id) {
+        replyRepository.getReplyById(id);
         return replyRepository.getAllRepliesById(id);
     }
 
     public void updateReply(String replyId, String message) {
+        replyRepository.getReplyById(replyId);
         replyRepository.updateMessage(replyId, message);
     }
 

@@ -12,6 +12,9 @@ public class Post {
     private String message;
     @NonNull
     private Timestamp timestamp;
+    private String repostId;
+
+    private String sharerId;
 
     @NonNull
     public String getId() {
@@ -47,5 +50,20 @@ public class Post {
 
     public void setTimestamp(@NonNull Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getRepostId() {
+        return repostId;
+    }
+    public void setRepostId(String repostId) {
+        this.repostId = repostId;
+    }
+
+    public String getSharerId() {
+        return sharerId;
+    }
+
+    public void setSharerId(String sharerId) {
+        this.sharerId = sharerId;
     }
 }

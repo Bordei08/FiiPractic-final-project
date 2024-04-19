@@ -31,6 +31,8 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public boolean isFollowBetween(String user1Id, String user2Id) {
+        userRepository.getUserById(user1Id);
+        userRepository.getUserById(user2Id);
         return followRepository.getFollowByUser1IdAndUser2Id(user1Id, user2Id);
     }
 
@@ -42,6 +44,7 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public List<User> getFollowers(String user1Id) {
+        userRepository.getUserById(user1Id);
         return followRepository.getFollowers(user1Id);
     }
 
@@ -52,6 +55,7 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public List<User> getFollow(String user2Id) {
+        userRepository.getUserById(user2Id);
         return followRepository.getFollow(user2Id);
     }
 }

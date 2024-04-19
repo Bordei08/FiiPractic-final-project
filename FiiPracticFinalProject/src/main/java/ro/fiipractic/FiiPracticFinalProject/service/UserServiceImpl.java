@@ -80,6 +80,7 @@ public class UserServiceImpl implements  UserService{
     public void patchUser(String id, Map<String, String> partialUser){
         User user = userRepository.getUserById(id);
         userUtil.patchUser(user,partialUser);
+        userRepository.getUserById(user.getId());
         userRepository.updateUser(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getId());
     }
 

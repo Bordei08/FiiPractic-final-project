@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ro.fiipractic.FiiPracticFinalProject.models.Post;
+import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.service.PostService;
 
 import java.util.List;
@@ -58,6 +59,18 @@ public class PostController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void patchPost(@PathVariable String postId, @RequestBody Map<String,String> body) {
         postService.updatePost(postId, body.get("message"));
+    }
+
+    @GetMapping(value = "/reposts-user/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Post> getAllRepostsByUser(@PathVariable String userId){
+        return postService.getAllRepostsByUser(userId);
+    }
+
+    @GetMapping(value = "/sharers-post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> getAllSharersByPost(@PathVariable String postId){
+        return postService.getAllUsersByRepost(postId);
     }
 
 }
