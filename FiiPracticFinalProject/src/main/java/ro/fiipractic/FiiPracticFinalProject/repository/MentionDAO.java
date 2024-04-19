@@ -38,7 +38,7 @@ public class MentionDAO {
     }
 
     public int deleteMention(String id) {
-        return jdbcTemplate.update("DELETE \"MENTIONS\" WHERE \"ID\" = ?", id);
+        return jdbcTemplate.update("DELETE FROM \"MENTIONS\" WHERE \"ID\" = ?", id);
     }
 
     public Mention getMentionById(String id) {
@@ -51,12 +51,12 @@ public class MentionDAO {
 
     public List<User> getAllUsersByPostMentions(String postId){
         return jdbcTemplate.query("SELECT * FROM \"USERS\" WHERE \"ID\" IN ( " +
-                " SELECT * FROM \"MENTIONS\" WHERE \"POST_ID\" = ?)", new UserRowMapper(), postId);
+                " SELECT \"USER_ID\" FROM \"MENTIONS\" WHERE \"POST_ID\" = ?)", new UserRowMapper(), postId);
     }
 
     public List<Post> getAllPostsByUserMentions(String userId){
         return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"ID\" IN ( " +
-                " SELECT * FROM \"MENTIONS\" WHERE \"USER_ID\" = ?)", new PostRowMapper(), userId);
+                " SELECT \"POST_ID\" FROM \"MENTIONS\" WHERE \"USER_ID\" = ?)", new PostRowMapper(), userId);
     }
 
 }

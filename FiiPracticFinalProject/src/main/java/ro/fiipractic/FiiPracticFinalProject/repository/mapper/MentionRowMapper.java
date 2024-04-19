@@ -11,7 +11,7 @@ public class MentionRowMapper implements RowMapper<Mention> {
     public Mention mapRow(ResultSet rs, int rowNum) throws SQLException {
         Mention mention = new Mention();
         mention.setId(rs.getString("ID"));
-        mention.setUerId(rs.getString("USER_ID"));
+        mention.setUserId(rs.getString("USER_ID"));
         mention.setPostId(rs.getString("POST_ID"));
         return mention;
     }

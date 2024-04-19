@@ -25,7 +25,7 @@ public class MentionController {
     @PostMapping(value = "/mention", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void createMention(@RequestBody Mention mention){
-        mentionService.createMention(mention.getUerId(), mention.getPostId());
+        mentionService.createMention(mention.getUserId(), mention.getPostId());
     }
 
     @DeleteMapping(value = "/mention/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -39,6 +39,17 @@ public class PostDAO {
         }
     }
 
+    public int createRepost(Post repost) {
+        repost.setId(postIdGenerator.generatePostId(repost.getCreatorId(), repost.getTimestamp(), repost.getRepostId(), repost.getSharerId()));
+        try {
+            return jdbcTemplate.update("INSERT INTO  \"POSTS\" " +
+                    "(\"ID\",\"MESSAGE\", \"TIMESTAMP\", \"CREATOR_ID\", \"REPOST_ID\", \"SHARER_ID\")" +
+                    " VALUES(?,?,?,?,?,?)", repost.getId(), repost.getMessage(), repost.getTimestamp(), repost.getCreatorId(), repost.getRepostId(), repost.getSharerId());
+        } catch (Exception e) {
+            throw new EntityAlreadyExistsException("Already exist a repost with id : " + repost.getId());
+        }
+    }
+
     public int deletePost(String id) {
         return jdbcTemplate.update("DELETE FROM \"POSTS\" WHERE \"ID\" = ? ", id);
     }
@@ -56,7 +67,7 @@ public class PostDAO {
     }
 
     public List<Post> getAllPostByUserId(String userId) {
-        return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"CREATOR_ID\" = ?", new PostRowMapper(), userId);
+        return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"CREATOR_ID\" = ? ORDER BY \"TIMESTAMP\" DESC", new PostRowMapper(), userId);
     }
 
     public List<Post> getFeed(String userId) {
@@ -71,7 +82,7 @@ public class PostDAO {
 
     public List<Post> getAllRepostsByUser(String userId) {
         return jdbcTemplate.query("SELECT * FROM \"POSTS\" WHERE \"ID\" IN (" +
-                "SELECT \"REPOST_ID\" FROM \"POSTS\" WHERE \"SHARER_ID\" = ? )", new PostRowMapper(), userId);
+                "SELECT \"ID\" FROM \"POSTS\" WHERE \"SHARER_ID\" = ? )", new PostRowMapper(), userId);
     }
 
 }

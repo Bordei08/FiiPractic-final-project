@@ -30,6 +30,12 @@ public class PostController {
     }
 
 
+    @PostMapping(value = "/repost", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createRepost(@RequestBody Map<String, String> body ){
+        postService.addRepost(body.get("userId"), body.get("postId"));
+    }
+
     @DeleteMapping(value = "/post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable String postId) {

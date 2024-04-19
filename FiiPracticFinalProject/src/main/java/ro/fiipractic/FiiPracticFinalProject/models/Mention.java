@@ -6,7 +6,7 @@ public class Mention {
     @NonNull
     private String id;
     @NonNull
-    private String uerId;
+    private String userId;
     @NonNull
     private String postId;
 
@@ -20,12 +20,12 @@ public class Mention {
     }
 
     @NonNull
-    public String getUerId() {
-        return uerId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUerId(@NonNull String uerId) {
-        this.uerId = uerId;
+    public void setUserId(@NonNull String userId) {
+        this.userId = userId;
     }
 
     @NonNull

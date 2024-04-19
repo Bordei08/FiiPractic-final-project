@@ -30,6 +30,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public void addRepost(String userId, String postId) {
+        userRepository.getUserById(userId);
+        Post repost = postRepository.getPostById(postId);
+        repost.setRepostId(postId);
+        repost.setSharerId(userId);
+        postRepository.createRepost(repost);
+    }
+
+    @Override
     public void updatePost(String id, String message) {
         postRepository.getPostById(id);
         postRepository.updateMessage(id, message);

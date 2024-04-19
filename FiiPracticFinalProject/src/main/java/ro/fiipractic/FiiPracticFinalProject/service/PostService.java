@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface PostService {
     public void addPost(Post post);
+    public void addRepost(String userId, String postId);
     public void updatePost(String id, String message);
     public void deletePost(String id);
     public List<Post> getFeed(String userId);
