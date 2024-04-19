@@ -70,7 +70,7 @@ public class UserDAO {
     }
 
     public int updateUser(String username, String firstName, String lastName, String email, String password, String id) {
-        return jdbcTemplate.update("UPDATE \"USERS\" SET \"USERNAME\" = ?, \"FIRST_NAME\" = ?, \"LAST_NAME\" = ?, \"EMAIL\" = ?, \"PASSWORD\" ? WHERE \"ID\" = ?", username, firstName, lastName, email, password, id);
+        return jdbcTemplate.update("UPDATE \"USERS\" SET \"USERNAME\" = ?, \"FIRST_NAME\" = ?, \"LAST_NAME\" = ?, \"EMAIL\" = ?, \"PASSWORD\" = ? WHERE \"ID\" = ?", username, firstName, lastName, email, password, id);
     }
 
     public int deleteUser(String id) {
