@@ -3,10 +3,7 @@ package ro.fiipractic.FiiPracticFinalProject.service;
 import org.apache.catalina.realm.UserDatabaseRealm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.fiipractic.FiiPracticFinalProject.exception.InvalidPasswordException;
-import ro.fiipractic.FiiPracticFinalProject.exception.UserNotFoundException;
-import ro.fiipractic.FiiPracticFinalProject.exception.UsernameAlreadyExistsException;
-import ro.fiipractic.FiiPracticFinalProject.exception.WeakPasswordException;
+import ro.fiipractic.FiiPracticFinalProject.exception.*;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.UserDAO;
 import ro.fiipractic.FiiPracticFinalProject.util.UserUtil;
@@ -30,7 +27,15 @@ public class UserServiceImpl implements  UserService{
         this.userUtil = userUtil;
     }
 
+    private boolean verifyObject(User user){
+        return user.getPassword() == null || user.getUsername() == null || user.getFirstName() == null || user.getLastName()  == null || user.getEmail() == null;
+     }
+
     public void registerUser(User user) throws UsernameAlreadyExistsException {
+
+        if(verifyObject(user))
+            throw new UnprocessableEntityException("The body is wrong to create a new user");
+
         try{
             userRepository.getUserByUsername(user.getUsername());
         }

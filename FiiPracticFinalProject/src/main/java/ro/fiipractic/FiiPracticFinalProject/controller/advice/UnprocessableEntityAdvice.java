@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ro.fiipractic.FiiPracticFinalProject.exception.EntityNotFoundException;
+import ro.fiipractic.FiiPracticFinalProject.exception.UnprocessableEntityException;
 
 @ControllerAdvice
-public class EntityNotFoundAdvice {
+public class UnprocessableEntityAdvice {
     @ResponseBody
-    @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleEntityNotFound(EntityNotFoundException ex) {
+    @ExceptionHandler(UnprocessableEntityException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public String handleUnprocessableEntity(UnprocessableEntityException ex) {
         return "{ \"error\" : \"" + ex.getMessage() + "\" }";
     }
 }
