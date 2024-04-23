@@ -2,6 +2,7 @@ package ro.fiipractic.FiiPracticFinalProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.fiipractic.FiiPracticFinalProject.exception.UnprocessableEntityException;
 import ro.fiipractic.FiiPracticFinalProject.models.Like;
 import ro.fiipractic.FiiPracticFinalProject.models.Post;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
@@ -25,11 +26,18 @@ public class LikeServiceImpl  implements  LikeService{
         this.userRepository = userRepository;
     }
 
+
+    private boolean verifyObject(Like like){
+        return !(like.getPostId() == null || like.getUserId() == null);
+    }
+
     @Override
-    public void createLike(String userId, String postId) {
-        userRepository.getUserById(userId);
-        postRepository.getPostById(postId);
-        likeRepository.createLike(userId, postId);
+    public void createLike(Like like){
+        if(!verifyObject(like))
+            throw new UnprocessableEntityException("The body is wrong to create a new like");
+        userRepository.getUserById(like.getUserId());
+        postRepository.getPostById(like.getPostId());
+        likeRepository.createLike(like.getUserId(), like.getPostId());
     }
 
     @Override

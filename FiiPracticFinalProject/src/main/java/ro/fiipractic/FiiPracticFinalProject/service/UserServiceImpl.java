@@ -28,12 +28,12 @@ public class UserServiceImpl implements  UserService{
     }
 
     private boolean verifyObject(User user){
-        return user.getPassword() == null || user.getUsername() == null || user.getFirstName() == null || user.getLastName()  == null || user.getEmail() == null;
+        return !(user.getPassword() == null || user.getUsername() == null || user.getFirstName() == null || user.getLastName()  == null || user.getEmail() == null);
      }
 
     public void registerUser(User user) throws UsernameAlreadyExistsException {
 
-        if(verifyObject(user))
+        if(!verifyObject(user))
             throw new UnprocessableEntityException("The body is wrong to create a new user");
 
         try{

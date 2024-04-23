@@ -2,12 +2,14 @@ package ro.fiipractic.FiiPracticFinalProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.fiipractic.FiiPracticFinalProject.exception.UnprocessableEntityException;
 import ro.fiipractic.FiiPracticFinalProject.models.Post;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.PostDAO;
 import ro.fiipractic.FiiPracticFinalProject.repository.UserDAO;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -30,18 +32,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void addRepost(String userId, String postId) {
-        userRepository.getUserById(userId);
-        Post repost = postRepository.getPostById(postId);
-        repost.setRepostId(postId);
-        repost.setSharerId(userId);
+    public void addRepost(Map<String, String> body) {
+        if(body.get("userId") == null || body.get("postId") == null)
+            throw new UnprocessableEntityException("The body is wrong to create a new repost");
+        userRepository.getUserById(body.get("userId"));
+        Post repost = postRepository.getPostById(body.get("postId"));
+        repost.setRepostId(body.get("postId"));
+        repost.setSharerId(body.get("userId"));
         postRepository.createRepost(repost);
     }
 
     @Override
-    public void updatePost(String id, String message) {
+    public void updatePost(String id, Map<String, String> body) {
         postRepository.getPostById(id);
-        postRepository.updateMessage(id, message);
+        if(body.get("message") == null)
+            throw new UnprocessableEntityException("The body is wrong to update this post");
+        postRepository.updateMessage(id, body.get("message"));
     }
 
     @Override

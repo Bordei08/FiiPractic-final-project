@@ -33,13 +33,15 @@ public class LikeController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "like a new mention",
                     content = @Content),
+            @ApiResponse(responseCode = "422", description = "The body is wrong to create a new like",
+                    content = @Content),
             @ApiResponse(responseCode = "400", description = "Already exist this like",
                     content = @Content)
     })
     @PostMapping(value = "/like", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void createLike(@RequestBody Like like) {
-        likeService.createLike(like.getUserId(), like.getPostId());
+        likeService.createLike(like);
     }
 
     @Operation(summary = "Get a like by id")

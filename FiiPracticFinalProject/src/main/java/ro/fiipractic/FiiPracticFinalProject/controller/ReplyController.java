@@ -31,13 +31,15 @@ public class ReplyController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created a new reply",
                     content = @Content),
+            @ApiResponse(responseCode = "422", description = "The body is wrong to create a new reply",
+                    content = @Content),
             @ApiResponse(responseCode = "400", description = "Already exist this reply",
                     content = @Content)
     })
     @PostMapping(value = "/reply", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void createReply(@RequestBody Reply reply) {
-        replyService.createReply(reply.getUserId(), reply.getPostId(), reply.getParentId(), reply.getMessage(), reply.getVarPublic());
+        replyService.createReply(reply);
     }
 
     @Operation(summary = "Delete a reply")
@@ -124,13 +126,15 @@ public class ReplyController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Updated reply",
                     content = @Content),
+            @ApiResponse(responseCode = "422", description = "The body is wrong to update this reply",
+                    content = @Content),
             @ApiResponse(responseCode = "404", description = "Reply not found",
                     content = @Content)
     })
     @PatchMapping(value = "/reply/{replyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void patchReply(@PathVariable String replyId, @RequestBody Map<String, String> body) {
-        replyService.updateReply(replyId, body.get("message"));
+        replyService.updateReply(replyId,body);
     }
 
 }

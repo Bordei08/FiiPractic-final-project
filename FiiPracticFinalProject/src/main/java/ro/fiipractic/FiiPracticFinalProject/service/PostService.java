@@ -4,11 +4,12 @@ import ro.fiipractic.FiiPracticFinalProject.models.Post;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PostService {
     public void addPost(Post post);
-    public void addRepost(String userId, String postId);
-    public void updatePost(String id, String message);
+    public void addRepost(Map<String, String> body);
+    public void updatePost(String id, Map<String, String> body) ;
     public void deletePost(String id);
     public List<Post> getFeed(String userId);
     public List<Post> getAllPostByUserId(String userId);

@@ -2,6 +2,7 @@ package ro.fiipractic.FiiPracticFinalProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.fiipractic.FiiPracticFinalProject.exception.UnprocessableEntityException;
 import ro.fiipractic.FiiPracticFinalProject.models.Follow;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
 import ro.fiipractic.FiiPracticFinalProject.repository.FollowDAO;
@@ -16,17 +17,27 @@ public class FollowServiceImpl implements FollowService {
     private FollowDAO followRepository;
     private UserDAO userRepository;
 
+
     @Autowired
     public FollowServiceImpl(FollowDAO followRepository, UserDAO userRepository) {
         this.followRepository = followRepository;
         this.userRepository = userRepository;
     }
 
+
+    private boolean verifyObject(Follow follow){
+        return !(follow.getTimestamp() == null || follow.getUser1Id() == null || follow.getUser2Id()== null);
+    }
+
     @Override
-    public void createFollow(String user1Id, String user2Id, Timestamp timestamp) {
-        userRepository.getUserById(user1Id);
-        userRepository.getUserById(user2Id);
-        followRepository.createNewFollower(user1Id, user2Id, timestamp);
+    public void createFollow(Follow follow) {
+        if(!verifyObject(follow)){
+
+            throw new UnprocessableEntityException("The body is wrong to create a new follow");
+        }
+        userRepository.getUserById(follow.getUser1Id());
+        userRepository.getUserById(follow.getUser2Id());
+        followRepository.createNewFollower(follow.getUser1Id(), follow.getUser2Id(), follow.getTimestamp());
     }
 
     @Override

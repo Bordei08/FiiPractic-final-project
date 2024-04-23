@@ -7,7 +7,7 @@ import ro.fiipractic.FiiPracticFinalProject.models.User;
 import java.util.List;
 
 public interface LikeService {
-    public void createLike(String userId, String postId);
+    public void createLike(Like like);
 
     public void deleteLike(String id);
 

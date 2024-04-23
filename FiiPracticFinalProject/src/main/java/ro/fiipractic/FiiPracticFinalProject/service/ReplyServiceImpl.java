@@ -2,12 +2,14 @@ package ro.fiipractic.FiiPracticFinalProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.fiipractic.FiiPracticFinalProject.exception.UnprocessableEntityException;
 import ro.fiipractic.FiiPracticFinalProject.models.Reply;
 import ro.fiipractic.FiiPracticFinalProject.repository.PostDAO;
 import ro.fiipractic.FiiPracticFinalProject.repository.ReplyDAO;
 import ro.fiipractic.FiiPracticFinalProject.repository.UserDAO;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReplyServiceImpl implements ReplyService {
@@ -23,13 +25,21 @@ public class ReplyServiceImpl implements ReplyService {
         this.postRepository = postRepository;
     }
 
+
+    private boolean verifyObject(Reply reply){
+        return !(reply.getVarPublic() == null || reply.getPostId() ==  null || reply.getUserId() == null || reply.getMessage() == null);
+    }
+
     @Override
-    public void createReply(String userId, String postId, String parentId, String message, boolean varPublic) {
-        userRepository.getUserById(userId);
-        postRepository.getPostById(postId);
-        if (parentId != null)
-            replyRepository.getReplyById(parentId);
-        replyRepository.createReply(postId, parentId, userId, message, varPublic);
+    public void createReply(Reply reply) {
+        if(!verifyObject(reply))
+            throw new UnprocessableEntityException("The body is wrong to create a new reply");
+
+        userRepository.getUserById(reply.getUserId());
+        postRepository.getPostById(reply.getPostId());
+        if (reply.getParentId() != null)
+            replyRepository.getReplyById(reply.getParentId());
+        replyRepository.createReply(reply.getPostId(), reply.getParentId(), reply.getUserId(), reply.getMessage(), reply.getVarPublic());
     }
 
     @Override
@@ -66,9 +76,11 @@ public class ReplyServiceImpl implements ReplyService {
         return replyRepository.getAllRepliesById(id);
     }
 
-    public void updateReply(String replyId, String message) {
+    public void updateReply(String replyId, Map<String, String> body) {
         replyRepository.getReplyById(replyId);
-        replyRepository.updateMessage(replyId, message);
+        if(body.get("message") == null)
+            throw new UnprocessableEntityException("The body is wrong to update this reply");
+        replyRepository.updateMessage(replyId, body.get("message"));
     }
 
 }

@@ -3,10 +3,11 @@ package ro.fiipractic.FiiPracticFinalProject.service;
 import ro.fiipractic.FiiPracticFinalProject.models.Reply;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReplyService {
 
-    public void createReply(String userId, String postId, String parentId, String message, boolean varPublic);
+    public void createReply(Reply reply);
     public void deleteReply(String id);
 
     public Reply getReplyById(String id);
@@ -19,6 +20,6 @@ public interface ReplyService {
 
     public List<Reply> getAllRepliesById(String id);
 
-    public void updateReply(String replyId, String message);
+    public void updateReply(String replyId, Map<String, String > body);
 
 }

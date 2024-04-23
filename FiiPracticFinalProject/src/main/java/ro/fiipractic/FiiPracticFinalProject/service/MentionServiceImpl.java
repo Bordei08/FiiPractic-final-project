@@ -2,6 +2,7 @@ package ro.fiipractic.FiiPracticFinalProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.fiipractic.FiiPracticFinalProject.exception.UnprocessableEntityException;
 import ro.fiipractic.FiiPracticFinalProject.models.Mention;
 import ro.fiipractic.FiiPracticFinalProject.models.Post;
 import ro.fiipractic.FiiPracticFinalProject.models.User;
@@ -24,11 +25,17 @@ public class MentionServiceImpl implements  MentionService {
         this.postRepository = postRepository;
     }
 
+    private boolean verifyObject(Mention mention){
+        return !(mention.getPostId() == null || mention.getUserId() == null);
+    }
+
     @Override
-    public void createMention(String userId, String postId) {
-        userRepository.getUserById(userId);
-        postRepository.getPostById(postId);
-        mentionRepository.createMention(userId, postId);
+    public void createMention(Mention mention) {
+        if(!verifyObject(mention))
+            throw new UnprocessableEntityException("The body is wrong to create a new mention");
+        userRepository.getUserById(mention.getUserId());
+        postRepository.getPostById(mention.getPostId());
+        mentionRepository.createMention(mention.getUserId(), mention.getPostId());
     }
 
     @Override

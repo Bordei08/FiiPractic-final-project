@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface MentionService {
-  public void createMention(String userId, String postId);
+  public void createMention(Mention mention);
   public void deleteMention(String id);
   public Mention getMentionById(String id);
   public List<User> getAllUsersByPostMentions(String postId);

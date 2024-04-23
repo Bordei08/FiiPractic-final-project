@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface FollowService {
-    public void createFollow(String user1Id, String user2Id, Timestamp timestamp);
+    public void createFollow(Follow follow);
     public boolean isFollowBetween(String user1Id, String  user2Id);
     public void deleteFollow(String id);
     public List<User> getFollowers(String user1Id);

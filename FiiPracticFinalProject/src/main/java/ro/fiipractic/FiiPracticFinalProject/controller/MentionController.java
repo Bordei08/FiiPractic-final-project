@@ -32,13 +32,15 @@ public class MentionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created a new mention",
                     content = @Content),
+            @ApiResponse(responseCode = "422", description = "The body is wrong to create a new mention",
+                    content = @Content),
             @ApiResponse(responseCode = "400", description = "Already exist this mention",
                     content = @Content)
     })
     @PostMapping(value = "/mention", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void createMention(@RequestBody Mention mention) {
-        mentionService.createMention(mention.getUserId(), mention.getPostId());
+        mentionService.createMention(mention);
     }
 
     @Operation(summary = "Delete a mention")

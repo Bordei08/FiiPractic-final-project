@@ -31,13 +31,15 @@ public class FollowController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created a new follow",
                     content = @Content),
+            @ApiResponse(responseCode = "422", description = "The body is wrong to create a new follow",
+                    content = @Content),
             @ApiResponse(responseCode = "400", description = "Already exist this follow",
                     content = @Content)
     })
     @PostMapping(value = "/follow", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void createFollow(@RequestBody Follow follow) {
-        followService.createFollow(follow.getUser1Id(), follow.getUser2Id(), follow.getTimestamp());
+        followService.createFollow(follow);
     }
 
     @Operation(summary = "Get users that follow user1")
